@@ -1,0 +1,43 @@
+A serial exception error occurred: Cannot configure port, something went wrong. Original message: PermissionError(13, '��ġ�� ������ �ν����� �ʽ��ϴ�.', None, 22)
+Note: This error originates from pySerial. It is likely not a problem with esptool, but with the hardware connection or drivers.
+For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+Failed uploading: uploading error: exit status 1
+
+=> 이 에러가 업로드시 뜲.. 
+해결책은 시리얼이 문제가 아니고, 
+
+=> 콘솔 연결시에 아래 메시지가 보이면, 
+
+8:26:55.141 -> Build:Mar 27 2021
+18:26:55.141 -> rst:0x3 (RTC_SW_SYS_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)  <= 
+18:26:55.141 -> Saved PC:0x403cdd61
+18:26:55.141 -> SPIWP:0xee
+18:26:55.141 -> mode:DIO, clock div:1
+18:26:55.141 -> load:0x3fce3818,len:0xf88
+18:26:55.141 -> load:0x403c9700,len:0x4
+18:26:55.141 -> load:0x403c9704,len:0xa14
+18:26:55.141 -> load:0x403cc700,len:0x2d64
+18:26:55.141 -> entry 0x403c988c
+ 
+18:26:55.635 -> E (511) esp_image: invalid segment length 0xffffffff  <= 
+18:26:55.635 -> E (511) boot: OTA app partition slot 0 is not bootable <= 
+18:26:55.635 -> E (511) boot: No bootable app partitions in the partition table <= 
+
+이 로그는 ESP32-S3에서 부팅 오류와 관련된 메시지입니다. 오류의 주요 내용은 **"OTA app partition slot 0 is not bootable"**와 
+"No bootable app partitions in the partition table" 입니다. 이는 ESP32가 부팅할 때 실행할 수 있는 유효한 애플리케이션 파티션을 
+찾지 못했다는 의미입니다.
+
+주요 원인 및 해결 방법:
+파티션 테이블 문제:
+
+파티션 테이블에 유효한 애플리케이션이 없다는 오류가 발생하고 있습니다. 이 문제는 ESP32의 플래시 메모리에 잘못된 
+파티션 테이블이나 손상된 펌웨어가 있을 때 발생할 수 있습니다.
+해결 방법:
+ESP32 플래시 초기화 및 새로운 파티션 테이블 작성: esptool.py를 사용하여 플래시를 지우고 새로운 펌웨어와 파티션 테이블을 업로드하세요.
+
+================해결책 ===============================
+
+esptool.exe --chip esp32s3 --port COM18 erase_flash 
+
+
+================ 플래시가 깨져서 지우고 새로 다운로드 할 것===========
