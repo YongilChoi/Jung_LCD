@@ -986,7 +986,7 @@ void img_click_event_cb_wifi(lv_event_t *e) {
 
     Serial.println("+++ serial2_wifilist in img_click_event_cb_wifi");
     // 요청 메시지 구조체 사용    
-      RequestMessage request = {0};
+      RequestMessage request = {};
       request.header.start_marker = 0xFF;
       request.header.type = MSG_REQUEST;
       request.header.timestamp = time(NULL);
@@ -1486,7 +1486,7 @@ void create_relay_settings(lv_obj_t *parent)
 void relay_event_handler(lv_event_t* e)
 {
     Serial.printf("+++ relay_event_handler, amount: %d \n", amount);   
-    BloodStatusMessage msg = {0};
+    BloodStatusMessage msg = {};
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_BLOOD_STATUS;
     Serial.println("+++ msg.header.type1:");

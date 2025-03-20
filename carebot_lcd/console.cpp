@@ -433,8 +433,8 @@ void handleGetWiFiStatus(const char* params) {
 }
 
 void handleSetWiFi(const char* params) {
-    char ssid[MAX_PARAM_LENGTH] = {0};
-    char password[MAX_PARAM_LENGTH] = {0};
+    char ssid[MAX_PARAM_LENGTH] = {};
+    char password[MAX_PARAM_LENGTH] = {};
     
     // SSID와 비밀번호 파싱
     const char* passwordStart = strrchr(params, ' ');
@@ -818,7 +818,7 @@ void handleRemoveFile(const char* params) {
    }
 
    // 입력 문자열 처리
-   char filepath[MAX_PARAM_LENGTH] = {0};
+   char filepath[MAX_PARAM_LENGTH] = {};
    strncpy(filepath, params, MAX_PARAM_LENGTH - 1);
    
    // 앞뒤 공백 제거

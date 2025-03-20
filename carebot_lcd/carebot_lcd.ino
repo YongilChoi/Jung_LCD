@@ -22,6 +22,7 @@ TaskHandle_t displayTaskHandle = NULL;
 TaskHandle_t lvglTaskHandle = NULL;
 TaskHandle_t touchTaskHandle = NULL;
 TaskHandle_t serialTaskHandle = NULL;
+TaskHandle_t handleTaskHandle = NULL;
 
 void initializeSystem();
 
@@ -63,7 +64,8 @@ void initializeSystem() {
 
 void setup() {
     // Start serial communication
-    Serial.begin(115200);
+    Serial.begin(115200); //PC연결용 디버깅 포트 (USB)
+	Serial2.begin(115200, SERIAL_8N1, 44, 43); //to Main board 연결 케이블 시리얼 포트(4 Pin connector) 
     delay(100);
     Serial.println("\n+++ HygeraApplication Starting +++");
     
@@ -92,6 +94,17 @@ void setup() {
         digitalWrite(GFX_BL, HIGH);
     #endif
 #endif
+
+	// 시리얼 통신을 위한 메시지 큐를 생성 
+	  serialQueue = xQueueCreate(QUEUE_SIZE, sizeof(uint8_t[512]));  
+	    if (serialQueue == NULL) {
+	        Serial.println("Failed to create queue!");
+	        return;
+	    }
+
+	// 메시지 큐 
+
+
     // Create tasks for different modules
     xTaskCreatePinnedToCore(
         display_task,     // Function to implement the task
@@ -131,7 +144,7 @@ void setup() {
          1,
          NULL,
          0);
-
+        // 시리얼  태스크 (Core  0  실행  )
     xTaskCreatePinnedToCore(
         serialTask,       // Function to implement the task
         "SerialTask",     // Name of the task
@@ -141,6 +154,16 @@ void setup() {
         &serialTaskHandle,// Task handle
         0                 // Core where the task should run
     );
+		// 핸들러 태스크 (Core 1  에서 실행)
+	xTaskCreatePinnedToCore(
+		handleTask,		 // Task 함수
+		"HandleTask", 	 // Task 이름
+		10000,			 // Stack 크기
+		NULL, 			 // Task 파라미터
+		2,				 // Task 우선순위
+		&handleTaskHandle, // Task 핸들
+		1 				 // Core 0에서 실행
+	);
     
     logMessage("Setup", LOG_LEVEL_INFO, "All tasks created and started");
 }

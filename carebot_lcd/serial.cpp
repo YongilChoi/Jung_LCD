@@ -20,7 +20,8 @@ int debug_serial_flag = false;
 #endif
 
 // 전역 상태 변수 정의
-GlobalState g_state = {0};
+QueueHandle_t serialQueue;  // 여기에서 한 번만 정의
+GlobalState g_state = {};
 
 static uint8_t serial2buffer[2048];
 
@@ -87,7 +88,7 @@ bool serial_protocol_init() {
 
 // WiFi 상태 전송
 void send_wifi_conn_info(char *ssid, const char *pw) {
-    WifiSelectMessage msg = {0};
+    WifiSelectMessage msg = {};
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_WIFI_SSID_SELECT;
     msg.header.timestamp = time(NULL);
@@ -109,7 +110,7 @@ void send_wifi_conn_info(char *ssid, const char *pw) {
 // WiFi 상태 전송
 void send_factory_init() {
 
-    FactoryInitMessage msg = {0};
+    FactoryInitMessage msg = {};
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_FACTORY_INIT;
     msg.header.timestamp = time(NULL);
@@ -738,7 +739,7 @@ char* format_timestamp(uint32_t timestamp, char* buffer, size_t size) {
 
 // Hello 메시지 전송
 void send_hello() {
-    HelloMessage msg = {0};
+    HelloMessage msg = {};
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_HELLO;
     msg.header.timestamp = time(NULL);
@@ -839,7 +840,7 @@ bool save_to_sd(const char* filename, void* data, size_t size) {
 
 // 백업 확인 응답 인코딩 (LCD -> Main)
 void encode_backup_ack(uint16_t chunk_index, uint8_t status) {
-    BackupAckMessage msg = {0};
+    BackupAckMessage msg = {};
     
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_DATA_BACKUP_ACK;
@@ -1302,7 +1303,7 @@ void process_message(void* message) {
         // 최신 백업 파일 찾기
         File root = SD.open("/backup");
         File entry;
-        char latest_backup[64] = {0};
+        char latest_backup[64] = {};
         time_t latest_time = 0;
         
         while((entry = root.openNextFile())) {
@@ -1336,7 +1337,7 @@ void process_message(void* message) {
         }
 
         // 파일 정보로 응답 전송
-        BackupRequestMessage resp = {0};
+        BackupRequestMessage resp = {};
         resp.header.start_marker = 0xFF;
         resp.header.type = MSG_DATA_RESTORE_DATA;
         resp.header.timestamp = time(NULL);
@@ -1963,7 +1964,7 @@ void serialTask(void *parameter) {
 
     DEBUG_LOG("Serial Task Created\n");
 
-    Serial2.begin(115200, SERIAL_8N1, 44, 43); 
+    
 
 //init_uart_simulation(); 
 #if 0 // ???? bgjung
@@ -1975,17 +1976,37 @@ if (!backlightSet) {
 
     while (1) {
       
-      if (Serial2.available()) {
+      if (Serial2.available()) {  //4pin serial 
           Serial.println("+++ in serialTask");
                
-          //uint8_t buffer[512];
-          size_t length = Serial2.readBytes(serial2buffer, sizeof(serial2buffer));
+          uint8_t buffer[512];
+          size_t length = Serial2.readBytes(buffer, sizeof(buffer));
           if (length > 0) {
-            Serial.print("\n \n +++ BEFORE handle_received_data \n ");
-            handle_received_data(serial2buffer, length);
+            
+			Serial.println("\n \n +++ Data received, adding to queue...");
+		  
+           // handle_received_data(serial2buffer, length);
+           
+		  	 if (xQueueSend(serialQueue, &buffer, portMAX_DELAY) != pdTRUE) {
+                    Serial.println("Queue full, dropping data...");
+         	 }
           }
       }
 
       vTaskDelay(pdMS_TO_TICKS(20)); // 딜레이 시간 단축
   }
 }
+// 수신 핸들러 태스크 (Core 0에서 실행)
+void handleTask(void *parameter) {
+    uint8_t buffer[512];
+    size_t length;
+
+    while (1) {
+        if (xQueueReceive(serialQueue, &buffer, portMAX_DELAY)) {  
+            Serial.println("\n \n +++ Processing received data...");
+            handle_received_data(buffer, length); // 데이터 처리 함수 호출
+        }
+    }
+}
+
+

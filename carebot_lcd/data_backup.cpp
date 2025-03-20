@@ -415,7 +415,7 @@ static void handle_virtual_restore_request(const uint8_t* data, size_t length) {
 static void handle_virtual_restore_data(uint16_t chunk_index) {
     if (!virtual_lcd_state.current_file || virtual_lcd_state.is_backup_mode) {
         logMessage("SIM", LOG_LEVEL_ERROR, "Invalid restore state");
-        RestoreDataMessage msg = {0};
+        RestoreDataMessage msg = {};
         msg.header.start_marker = 0xFF;
         msg.header.type = MSG_DATA_RESTORE_DATA;
         msg.header.timestamp = time(NULL);
@@ -442,7 +442,7 @@ static void handle_virtual_restore_data(uint16_t chunk_index) {
 
     if (bytes_read == 0) {
         logMessage("SIM", LOG_LEVEL_ERROR, "Failed to read restore data");
-        RestoreDataMessage msg = {0};
+        RestoreDataMessage msg = {};
         msg.header.start_marker = 0xFF;
         msg.header.type = MSG_DATA_RESTORE_DATA;
         msg.header.timestamp = time(NULL);
@@ -453,7 +453,7 @@ static void handle_virtual_restore_data(uint16_t chunk_index) {
         msg.chunk_size = 0;
         msg.checksum = calculate_checksum(&msg, sizeof(RestoreDataMessage) - 1);
 
-        uart_message_t uart_msg = {0};
+        uart_message_t uart_msg = {};
         memcpy(uart_msg.data, &msg, sizeof(RestoreDataMessage));
         uart_msg.length = sizeof(RestoreDataMessage);
         xQueueSend(uart_rx_queue, &uart_msg, pdMS_TO_TICKS(100));
@@ -462,7 +462,7 @@ static void handle_virtual_restore_data(uint16_t chunk_index) {
         return;
     }
 
-    RestoreDataMessage msg = {0};
+    RestoreDataMessage msg = {};
     msg.header.start_marker = 0xFF;
     msg.header.type = MSG_DATA_RESTORE_DATA;
     msg.header.timestamp = time(NULL);
@@ -478,7 +478,7 @@ static void handle_virtual_restore_data(uint16_t chunk_index) {
 
     msg.checksum = calculate_checksum(&msg, sizeof(RestoreDataMessage) - 1);
 
-    uart_message_t uart_msg = {0};
+    uart_message_t uart_msg = {};
     memcpy(uart_msg.data, &msg, sizeof(RestoreDataMessage));
     uart_msg.length = sizeof(RestoreDataMessage);
 
@@ -520,7 +520,7 @@ static void handle_virtual_restore_ack(const uint8_t* data, size_t length) {
 // Utility functions
 static time_t parseBackupTimestamp(const String& timestamp) {
     // _YYYYMMDD_HHMMSS 형식 파싱
-    struct tm tm = {0};
+    struct tm tm = {};
     int year, month, day, hour, min, sec;
     
     if (sscanf(timestamp.c_str(), "_%4d%2d%2d_%2d%2d%2d",
@@ -594,7 +594,7 @@ static bool init_virtual_storage(void) {
 }
 // ACK 메시지 전송
 static void send_virtual_ack(uint16_t chunk_index, uint8_t status) {
-    BackupAckMessage ack = {0};
+    BackupAckMessage ack = {};
     
     // 헤더 설정
     ack.header.start_marker = 0xFF;
@@ -612,7 +612,7 @@ static void send_virtual_ack(uint16_t chunk_index, uint8_t status) {
 
     // ACK 전송 시도 (최대 3번)
     for (int retry = 0; retry < 3; retry++) {
-        uart_message_t msg = {0};
+        uart_message_t msg = {};
         memcpy(msg.data, &ack, sizeof(BackupAckMessage));  // 명시적으로 BackupAckMessage 크기 사용
         msg.length = sizeof(BackupAckMessage);             // 명시적으로 BackupAckMessage 크기 사용
         
