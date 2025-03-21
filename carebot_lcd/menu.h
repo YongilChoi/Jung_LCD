@@ -5,6 +5,7 @@
 #define LENGTH_TIMESTAMP  32
 #define MAX_WIFI_NETWORKS 10
 
+#define LV_COLOR_TRANSP lv_color_hex(0x000000)  // 검은색을 투명하게 설정
 typedef struct {
     char ssid[33];  // Max SSID length
     int32_t rssi;
