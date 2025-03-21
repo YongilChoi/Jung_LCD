@@ -5,6 +5,9 @@
 #include "menu.h"
 #include "event.h"
 #include "audio.h"
+#include "image_assets.h"
+#include "lv_conf.h"
+
 
 lv_obj_t *header_label;
 lv_obj_t *header_label_back;
@@ -33,9 +36,7 @@ int network_count = 0;
 
 void img_click_event_cb_icn01(lv_event_t * e);
 
-// 한글 폰트 파일을 배열로 포함 (예: NanumGothic.ttf를 변환한 경우)
-//LV_FONT_DECLARE(nanum_gothic_16);
-LV_FONT_DECLARE(nanum_gothic_18);
+
 
 // 전역 변수 선언
 //static lv_obj_t *wifi_screen;
@@ -617,12 +618,33 @@ void initial_scr(void) {
 
     //////////////////////////////////////////////////////////////////////////////// 
 
-    header_label_back = lv_label_create(main_screen);
-    lv_label_set_text(header_label_back, "^");
-    lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
-    lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+   // header_label_back = lv_label_create(main_screen); //기존 텍스트 뒤로가 버튼 생성 
+	header_label_back = lv_imgbtn_create(main_screen);  //1. 이미지로 변경 
+	    // 버튼 크기 설정 (이미지 크기에 맞게 조정)
+    lv_obj_set_size(header_label_back, 25, 25);
+
+	// 버튼에 이미지 설정 (기본 상태)
+    lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+
+	    // 위치 설정 (기존 코드와 동일한 위치)
+    lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+		
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);	
+		
+		
+   // lv_label_set_text(header_label_back, "^");  //back btn text 설정 
+    
+   // lv_obj_add_style(header_label_back, &style_header_18, 0);
+	
+  //  lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	
+  //  lv_obj_set_size(header_label_back, 50, 25);
+	
+  //  lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 // 라벨을 클릭 가능하도록 설정initial_cb
 lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
@@ -631,7 +653,9 @@ lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하�
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);
+// lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);  //back btn 
+lv_obj_add_event_cb(header_label_back, initial_cb_1, LV_EVENT_CLICKED, NULL);  //back btn 
+
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -724,12 +748,27 @@ void wifi_ap_setup_cb(void) {
 
 //////////////////////////////////////////////////////////////////////////////// 
 
-    header_label_back = lv_label_create(wifi_ap_setup_screen);
-    lv_label_set_text(header_label_back, "^");
+   // header_label_back = lv_label_create(wifi_ap_setup_screen);
+	header_label_back = lv_imgbtn_create(wifi_ap_setup_screen);	//1. 이미지로 변경 
+
+  //  lv_label_set_text(header_label_back, "^");
+	lv_obj_set_size(header_label_back, 25, 25);
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	
     lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
-    lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	
+   // lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+    // lv_obj_set_size(header_label_back, 50, 25);
+	
+   // lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+
 
 // 라벨을 클릭 가능하도록 설정initial_cb
 lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
@@ -738,7 +777,9 @@ lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하�
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+//lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn 
+
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -776,11 +817,11 @@ lv_obj_align(inform_label, LV_ALIGN_RIGHT_MID, -20, 10);
     //show_menu_content("WiFi AP Setup", "Configure WiFi Access Point settings...");
 }
 
-void initial_cb_1(void) {
+void initial_cb_1(lv_event_t * e) {
 
   Serial.println("+++ initial_cb_1 initial before");
 
-  menu_ON == 0;
+  menu_ON = 0;
 
   //lvgl_create_app_ui();
   //lvgl_update_app_ui();
@@ -791,7 +832,7 @@ void initial_cb_1(void) {
     //show_menu_content("Alarm Setup", "Configure system alarm settings...");
 }
 
-void initial_cb_2(void) {
+void initial_cb_2(lv_event_t * e) {
 
   Serial.println("+++ initial_cb_2 initial before");
 
@@ -874,18 +915,35 @@ void wifi_network_selected(lv_event_t *e) {
     //    connect_to_wifi(selected_network->ssid, "");
     //}
 
-    header_label_back = lv_label_create(password_screen);
-    lv_label_set_text(header_label_back, "^");
+   // header_label_back = lv_label_create(password_screen);
+	header_label_back = lv_imgbtn_create(main_screen); 
+	lv_obj_set_size(header_label_back, 25, 25);
+	
+    //lv_label_set_text(header_label_back, "^");
+    lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	
     lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	
+  // lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+  
+      // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+	
     lv_obj_set_size(header_label_back, 50, 25);
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	
 
     // 라벨을 클릭 가능하도록 설정initial_cb
     lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
 
     // 클릭 이벤트 추가
-    lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);
+  //  lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);
+	lv_obj_add_event_cb(header_label_back, initial_cb_1, LV_EVENT_CLICKED, NULL);//back btn 
+
 
     // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
     lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -923,24 +981,39 @@ void create_wifi_selection_screen() {
   ////////////////////////////////////////////////////////////////////////////////
     // 헤더 레이블 생성
     header_label = lv_label_create(wifi_screen);
+	
+
+	
     lv_label_set_text(header_label, "WIFI 목록");
     lv_obj_add_style(header_label, &style_header_18, 0);
     lv_obj_align(header_label, LV_ALIGN_TOP_MID, 0, 15); 
     lv_obj_set_size(header_label, 480, 25);
     lv_obj_set_style_text_align(header_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT); 
 
-    header_label_back = lv_label_create(wifi_screen);
-    lv_label_set_text(header_label_back, "^");
+	header_label_back = lv_imgbtn_create(wifi_screen);
+	lv_obj_set_size(header_label_back, 25, 25);
+	
+ // lv_label_set_text(header_label_back, "^");
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	
     lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
+  //  lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+ //   lv_obj_set_size(header_label_back, 50, 25);
+     // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+ 
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     // 라벨을 클릭 가능하도록 설정initial_cb
     lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
 
     // 클릭 이벤트 추가
-    lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);
+   // lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);  //백버튼.. 메뉴 화면에서 뒤로 가기 
+	lv_obj_add_event_cb(header_label_back, initial_cb_1, LV_EVENT_CLICKED, NULL);  //back btn 
 
     // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
     lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -1031,11 +1104,21 @@ void alarm_setup_cb(void) {
 
  
 
-    header_label_back = lv_label_create(alarm_setup_screen);
-    lv_label_set_text(header_label_back, "^");
+   // header_label_back = lv_label_create(alarm_setup_screen);
+	header_label_back = lv_imgbtn_create(alarm_setup_screen);  //1. 이미지로 변경 
+    //lv_label_set_text(header_label_back, "^");
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	
     lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
+    //lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+	
+    lv_obj_set_size(header_label_back, 25, 25);
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 // 라벨을 클릭 가능하도록 설정initial_cb
@@ -1045,7 +1128,9 @@ lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하�
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+//lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn
+
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -1086,13 +1171,26 @@ void relay_info_cb(void) {
 
  
 
-    header_label_back = lv_label_create(sub_screen);
-    lv_label_set_text(header_label_back, "^");
+    //header_label_back = lv_label_create(sub_screen);
+		header_label_back = lv_imgbtn_create(sub_screen);
+	
+    //lv_label_set_text(header_label_back, "^");
+		lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
     lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
+	
+    //lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+		lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+    //lv_obj_set_size(header_label_back, 50, 25);
+		lv_obj_set_size(header_label_back, 25, 25);
+	
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+	
 // 라벨을 클릭 가능하도록 설정initial_cb
 lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
 
@@ -1100,7 +1198,9 @@ lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하�
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+//lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn
+
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -1141,12 +1241,28 @@ void urination_cb(void) {
 
  
 
-    header_label_back = lv_label_create(sub_screen);
-    lv_label_set_text(header_label_back, "^");
-    lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
-    lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+//    header_label_back = lv_label_create(sub_screen);
+//    lv_label_set_text(header_label_back, "^");
+//    lv_obj_add_style(header_label_back, &style_header_18, 0);
+//    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+//    lv_obj_set_size(header_label_back, 50, 25);
+//    lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+	header_label_back = lv_imgbtn_create(sub_screen); 
+	lv_obj_set_size(header_label_back, 25, 25);
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+	//lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+	
+
+
+	
 
 // 라벨을 클릭 가능하도록 설정initial_cb
 lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
@@ -1155,7 +1271,9 @@ lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하�
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+// lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn 
+
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -1194,21 +1312,35 @@ void terminal_info_cb(void) {
 
  
 
-    header_label_back = lv_label_create(sub_screen);
-    lv_label_set_text(header_label_back, "^");
-    lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
+//    header_label_back = lv_label_create(sub_screen);
+//    lv_label_set_text(header_label_back, "^");
+//    lv_obj_add_style(header_label_back, &style_header_18, 0);
+//    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+//    lv_obj_set_size(header_label_back, 50, 25);
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+	header_label_back = lv_imgbtn_create(sub_screen); 
+	lv_obj_set_size(header_label_back, 25, 25);
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+	
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+	
+	lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn 
+
 // 라벨을 클릭 가능하도록 설정initial_cb
-lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+//lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
 
 // 클릭 영역을 더 크게 만들기 (선택사항)
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+//lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도
@@ -1247,21 +1379,34 @@ void factory_menu_cb(void) {
 
  
 
-    header_label_back = lv_label_create(sub_screen);
-    lv_label_set_text(header_label_back, "^");
-    lv_obj_add_style(header_label_back, &style_header_18, 0);
-    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-    lv_obj_set_size(header_label_back, 50, 25);
+//    header_label_back = lv_label_create(sub_screen);
+//    lv_label_set_text(header_label_back, "^");
+//    lv_obj_add_style(header_label_back, &style_header_18, 0);
+//    lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
+//    lv_obj_set_size(header_label_back, 50, 25);
+	header_label_back = lv_imgbtn_create(sub_screen); 
+
+	lv_obj_set_size(header_label_back, 25, 25);
+	lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+	lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+	    // 배경 투명도 설정 (이미지 자체의 불투명도를 100% 유지)
+    lv_obj_set_style_img_opa(header_label_back, LV_OPA_COVER, LV_PART_MAIN);
+
+    // 특정 색상(예: 0x000000, 검은색)을 투명하게 만들기
+    lv_obj_set_style_img_recolor_opa(header_label_back, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
+	lv_obj_add_event_cb(header_label_back, initial_cb_2, LV_EVENT_CLICKED, NULL);  //back btn 
     lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	
 
 // 라벨을 클릭 가능하도록 설정initial_cb
-lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+//lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
 
 // 클릭 영역을 더 크게 만들기 (선택사항)
 //lv_obj_set_style_pad_all(header_label_back, 5, LV_STATE_DEFAULT);  // 패딩 추가
 
 // 클릭 이벤트 추가
-lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
+//lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_2, LV_EVENT_CLICKED, NULL);
 
 // 선택사항: 클릭 시각적 피드백을 위한 스타일 추가
 lv_obj_set_style_bg_opa(header_label_back, LV_OPA_50, LV_STATE_PRESSED);  // 클릭시 배경 투명도

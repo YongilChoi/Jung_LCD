@@ -371,7 +371,7 @@ void Event_power_OFF() {
 
 void Event_wifi_ON() {
     Serial.println("+++ Event_wifi_ON");
-    if (menu_ON == 1) {
+    if (menu_ON == 1) {  
       return;
     }
 
@@ -404,7 +404,7 @@ void Event_wifi_ON() {
 
 void Event_wifi_OFF() {
     Serial.println("+++ Event_wifi_OFF");
-    if (menu_ON == 1) {
+    if (menu_ON == 0) {
       return;
     }
     Serial.println("+++ lv_obj_del(wifi)");
@@ -555,7 +555,7 @@ void cover_open_event_handler() {
 
             // 버튼에 라벨 추가
             label_hema = lv_label_create(btn_hema);
-            lv_label_set_text(label_hema, "확인");
+            lv_label_set_text(label_hema, "확인");  // 확인버튼 닫기 안됨 by yichoi 
             lv_obj_center(label_hema); 
             lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
             lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거          
@@ -815,7 +815,7 @@ void waiting_event_handler_2(char* status) {
     
 }
 #endif
-
+/* 만수위 */ 
 void fulllevel_event_handler() {
    
             // 1. 메시지 박스 상단 이미지 준비

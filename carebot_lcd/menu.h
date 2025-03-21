@@ -48,8 +48,8 @@ void create_new_screen(lv_timer_t *timer);
 void settings_screen_destroy(void);
 
 void initial_scr(void);
-void initial_cb_1(void);
-void initial_cb_2(void);
+void initial_cb_1(lv_event_t * e);
+void initial_cb_2(lv_event_t * e);
 
 void msg_close_handler_parent(lv_event_t * e);
 

@@ -5,11 +5,9 @@
 #include <time.h>
 //#include <WiFi.h>
 #include <ctype.h>
+#include "image_assets.h"
 
 static void setup_ui();
-
-LV_IMG_DECLARE(img_power_off);
-LV_IMG_DECLARE(img_power_on);
 
 static lv_obj_t* icon_img;  // 이미지 객체
 static uint8_t current_icon = 0;  // 현재 표시중인 아이콘 인덱스

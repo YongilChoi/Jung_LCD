@@ -361,7 +361,7 @@ bool decode_event_message(EventMessage* msg, char* output, size_t output_size) {
 
     case EVENT_ERROR:
       event_type_str = "Error Event";
-      snprintf(temp, sizeof(temp), "Error 0x%02X: Detail 0x%02X",
+      snprintf(temp, sizeof(temp), "Error 0x%02X: Detail %s",
                msg->data.error.error_code, msg->data.error.detail);
       break;
 
@@ -1861,15 +1861,14 @@ void process_message(void* message) {
               switch (msg->event_source) {
                 case WIFI_EVENT_CONNECTED:
                   {
-                    DEBUG_LOG("WiFi Connected:\n");
+                    DEBUG_LOG("EVENT_WIFI_CHANGE : event_source: WiFi Connected:\n");
                     DEBUG_LOG("  Details: %s\n", msg->data.error.detail);
 
                     // LCD에 WiFi 연결 상태 표시
                     //display_wifi_connected_status(msg->data.error.detail);
 
                     Event_wifi_ON();
-
-
+					
                     // SD 카드 로깅
                     if (msg->header.flags & FLAG_SAVE_TO_SD) {
                       //save_to_sd("/wifi/connection.log", msg, sizeof(EventMessage));
@@ -1878,7 +1877,7 @@ void process_message(void* message) {
                   }
                 case WIFI_EVENT_DISCONNECTED:
                   {
-                    DEBUG_LOG("WiFi Disconnected:\n");
+                    DEBUG_LOG("EVENT_WIFI_CHANGE : event_source: WiFi Disconnected:\n");
                     DEBUG_LOG("  Error Code: 0x%02X\n", msg->data.error.error_code);
                     DEBUG_LOG("  Details: %s\n", msg->data.error.detail);
 
