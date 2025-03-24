@@ -585,11 +585,11 @@ void initial_scr(void) {
 
      // 패널 스타일 설정
    
-    lv_style_set_bg_color(&style_panel, lv_color_hex(0xEEEEEE));
-    lv_style_set_border_color(&style_panel, lv_color_hex(0x999999));
-    lv_style_set_border_width(&style_panel, 2);
-    lv_style_set_pad_all(&style_panel, 10);
-    lv_style_set_radius(&style_panel, 5);     
+    lv_style_set_bg_color(&style_panel, lv_color_hex(0xEEEEEE));  //배경색 매우 밝은 회색, lv_color_hex()는 16진수 색상을 lv_color_t 타입으로 변환
+    lv_style_set_border_color(&style_panel, lv_color_hex(0x999999)); //경계선 색상, 중간 정도의 회색
+    lv_style_set_border_width(&style_panel, 2); // 경계선의 두께
+    lv_style_set_pad_all(&style_panel, 10); //**모든 방향의 패딩(padding)**, 모든 방향(상, 하, 좌, 우)에서 10픽셀만큼의 여백을 설정합니다. 패딩은 내부 요소와 경계선 사이의 간격을 설정
+    lv_style_set_radius(&style_panel, 5); //**모서리의 둥근 정도(반지름)**를 설정, 모서리 반지름을 5로 설정하여, 패널의 모서리가 둥글게 보이도록 만듭니다. 숫자가 클수록 더 둥글고, 숫자가 작을수록 더 직각에 가까워집니다.     
 
 
   // 메인 스크린 생성

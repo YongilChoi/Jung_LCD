@@ -404,7 +404,7 @@ void Event_wifi_ON() {
 
 void Event_wifi_OFF() {
     Serial.println("+++ Event_wifi_OFF");
-    if (menu_ON == 0) {
+    if (menu_ON == 0) {  //왜 여기만 0이면, 빠져 나가게 했나? 이상함. 
       return;
     }
     Serial.println("+++ lv_obj_del(wifi)");

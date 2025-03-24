@@ -222,7 +222,7 @@ void handle_received_data(uint8_t* data, size_t length) {
         //return;
     }
     
-   DEBUG_LOG("\n=== RECEIVED MESSAGE ===\n");
+   DEBUG_LOG("\n=== handle_received_data: RECEIVED MESSAGE ===\n");
    decode_message_header(header);
    DEBUG_LOG("Hex dump:\n");
    print_hex_dump(data, length);
@@ -1855,7 +1855,7 @@ void process_message(void* message) {
               }
               break;
             }
-          case EVENT_WIFI_CHANGE:
+          case EVENT_WIFI_CHANGE:  //yichoi 
             {
               // WiFi 이벤트 처리
               switch (msg->event_source) {
@@ -2002,7 +2002,7 @@ void handleTask(void *parameter) {
 
     while (1) {
         if (xQueueReceive(serialQueue, &buffer, portMAX_DELAY)) {  
-            Serial.println("\n \n +++ Processing received data...");
+            Serial.println("\n \n handleTask: Processing received data...");
             handle_received_data(buffer, length); // 데이터 처리 함수 호출
         }
     }
