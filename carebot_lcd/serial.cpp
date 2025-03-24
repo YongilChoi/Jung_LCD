@@ -365,6 +365,12 @@ bool decode_event_message(EventMessage* msg, char* output, size_t output_size) {
                msg->data.error.error_code, msg->data.error.detail);
       break;
 
+    case EVENT_WIFI_CHANGE:
+      event_type_str = "Wifi Event";
+      snprintf(temp, sizeof(temp), "Wifi Change 0x%02X: Detail %s",
+               msg->data.error.error_code, msg->data.error.detail);
+      break;	  
+
     default:
       snprintf(temp, sizeof(temp), "Unknown event type: 0x%02X",
                msg->event_type);
@@ -924,7 +930,7 @@ void process_message(void* message) {
         g_state.peer_connected = true;
 
         // Hello ACK 응답
-        HelloMessage response = { 0 };
+        HelloMessage response = { };
         response.header.start_marker = 0xFF;
         response.header.type = MSG_HELLO_ACK;
         response.header.timestamp = time(NULL);
@@ -1889,17 +1895,22 @@ void process_message(void* message) {
                     switch (msg->data.error.error_code) {
                       case WIFI_ERROR_AUTH_FAILED:
                         //show_wifi_error_message("Authentication Failed");
+                        DEBUG_LOG("Authentication Failed: 0x%02X\n", msg->data.error.error_code);
                         break;
                       case WIFI_ERROR_NO_AP_FOUND:
-                        //show_wifi_error_message("AP Not Found");
+					  	            DEBUG_LOG("AP Not Found: 0x%02X\n", msg->data.error.error_code);
+                       // show_wifi_error_message("AP Not Found");
                         break;
                       case WIFI_ERROR_CONNECT_TIMEOUT:
+					  	            DEBUG_LOG("Connection Timeout: 0x%02X\n", msg->data.error.error_code);
                         //show_wifi_error_message("Connection Timeout");
                         break;
                       case WIFI_ERROR_LOST_CONN:
+					  	            DEBUG_LOG("Connection Lost: 0x%02X\n", msg->data.error.error_code);
                         //show_wifi_error_message("Connection Lost");
                         break;
                       case WIFI_ERROR_SIGNAL_LOST:
+					  	            DEBUG_LOG("Signal Lost: 0x%02X\n", msg->data.error.error_code);
                         //show_wifi_error_message("Signal Lost");
                         break;
                     }
@@ -1957,6 +1968,14 @@ void process_message(void* message) {
       break;
   }  // end of switch(header->type)
 }  // end of process_message()
+
+void show_wifi_error_message(const char* message){
+	DEBUG_LOG("message type: %s\n", message);
+
+}
+
+
+
 
 // Serial 통신을 처리할 task 함수
 void serialTask(void *parameter) {  

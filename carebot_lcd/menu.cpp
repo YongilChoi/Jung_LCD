@@ -717,7 +717,10 @@ void show_menu_content(const char *title, const char *content) {
 
 void close_popup_cb(lv_event_t *e) {
     //lv_obj_t *popup = lv_event_get_user_data(e);
-    lv_obj_del(close_btn);
+    lv_obj_t *popup = lv_event_get_target(e);
+	lv_obj_del(popup);  // 알림창 삭제
+
+	//lv_obj_del(close_btn);
     //lv_event_get_user_data(e);
 }
 
