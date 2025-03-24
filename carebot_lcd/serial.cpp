@@ -10,7 +10,7 @@
 
 #define BOARD_TYPE_LCD
 #define DEBUG_ENABLED
-int debug_serial_flag = false;
+int debug_serial_flag = true;
 
 #ifdef DEBUG_ENABLED
 #define DEBUG_LOG(...) \
