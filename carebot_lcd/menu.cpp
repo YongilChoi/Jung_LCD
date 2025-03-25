@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "event.h"
 #include "audio.h"
+#include "image_assets.h"
 
 lv_obj_t *header_label;
 lv_obj_t *header_label_back;

@@ -5,6 +5,7 @@
 #define LENGTH_TIMESTAMP  32
 #define MAX_WIFI_NETWORKS 10
 
+
 typedef struct {
     char ssid[33];  // Max SSID length
     int32_t rssi;
