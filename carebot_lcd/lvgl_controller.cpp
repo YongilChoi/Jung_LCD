@@ -68,6 +68,7 @@ LV_IMG_DECLARE(img_wifi_off);
 LV_IMG_DECLARE(img_wifi_on);
 LV_IMG_DECLARE(img_bat_off);
 LV_IMG_DECLARE(img_bat_on);
+LV_IMG_DECLARE(img_backbtn);
 
 // Font declarations
 LV_FONT_DECLARE(nanum_gothic_16);
