@@ -13,7 +13,7 @@
 
 SystemSettings settings;
 char g_serialNumber[MAX_SERIAL_NUMBER_LENGTH] = "UNSET";
-char g_current_version[] = "202502121155";
+char g_current_version[] = "202503211400";
 
 uint8_t debug_level = LOG_LEVEL_INFO;
 //uint8_t debug_level = LOG_LEVEL_DEBUG;

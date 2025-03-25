@@ -1,10 +1,8 @@
-
-#if 0
 // uart_simulation.cpp
-//#ifdef USE_UART_SIMULATION
+#ifdef USE_UART_SIMULATION
 #include "common.h"
-//#include "uart_simulation.h"
-//#include "serial_protocol.h"
+#include "uart_simulation.h"
+#include "serial_protocol.h"
 #include "mqtt_persistence.h"
 
 static QueueHandle_t uart_tx_queue = NULL;  // Main -> LCD
@@ -42,52 +40,15 @@ static void send_virtual_ack(uint16_t chunk_index, uint8_t status);
 static bool init_virtual_storage(void);
 static time_t get_oldest_backup_file(char* filename, size_t max_length);
 
-static uint8_t debug_level = LOG_LEVEL_INFO;
-//static uint8_t debug_level = LOG_LEVEL_DEBUG;
-
-// 로그 레벨을 문자열로 변환하는 함수
-const char* logLevelToString(LogLevel level) {
-    switch (level) {
-        case LOG_LEVEL_DEBUG: return "DEBUG";
-        case LOG_LEVEL_INFO:  return "INFO";
-        case LOG_LEVEL_WARN:  return "WARN";
-        case LOG_LEVEL_ERROR: return "ERROR";
-        default:              return "UNKNOWN";
-    }
+/*
+bool abcd()
+{
 }
+*/
 
-void logMessage(const char* taskName, LogLevel level, const char* format, ...) {
-    if (level < debug_level) return;
-
-    static char buffer[256]; // 로그 메시지를 저장할 버퍼
-    
-    // 현재 시간 가져오기
-    time_t now;
-    time(&now);
-    struct tm timeinfo;
-    localtime_r(&now, &timeinfo);
-    
-    // 시간 문자열 생성
-    char timeStr[20];
-    strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", &timeinfo);
-    
-    // 로그 메시지의 앞부분 생성 (시간, 태스크 이름, 로그 레벨)
-    int prefixLen = snprintf(buffer, sizeof(buffer), "[%s] [%s] [%s] ", 
-                             timeStr, taskName, logLevelToString(level));
-    
-    // 가변 인자를 사용하여 나머지 메시지 생성
-    va_list args;
-    va_start(args, format);
-    vsnprintf(buffer + prefixLen, sizeof(buffer) - prefixLen, format, args);
-    va_end(args);
-    
-    // 로그 출력 (여기서는 시리얼로 출력)
-    Serial.println(buffer);
-    
-    //
-}
 
 // 초기화 함수
+//bool init_uart_simulation(void) {
 bool init_uart_simulation() {
 
     logMessage("SIM", LOG_LEVEL_INFO, "Initializing UART simulation...");
@@ -627,5 +588,4 @@ static void send_virtual_ack(uint16_t chunk_index, uint8_t status) {
     logMessage("SIM", LOG_LEVEL_ERROR, "Failed to send ACK for chunk %d after 3 retries", 
               chunk_index);
 }
-//#endif //#ifdef USE_UART_SIMULATION
-#endif
+#endif //#ifdef USE_UART_SIMULATION
