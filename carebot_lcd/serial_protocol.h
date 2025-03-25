@@ -39,6 +39,14 @@
 #define CONNECTION_TIMEOUT_MS 10000
 #define RANDOM_EVENT_INTERVAL 5000
 
+// 수신 버퍼 및 큐 설정
+#define RX_BUFFER_SIZE 512
+#define RX_QUEUE_SIZE 10
+#define MAX_MESSAGE_SIZE 1024
+
+// 백업 데이터 청크 크기
+#define BACKUP_CHUNK_SIZE 512
+
 // Message Types
 #define MSG_HELLO           0x01
 #define MSG_HELLO_ACK      0x02
@@ -150,6 +158,41 @@ typedef struct {
     char ip[16];
     char detail[32];
 } WifiEventDetail;
+// 수신 큐를 위한 구조체
+typedef struct {
+    uint8_t buffer[MAX_MESSAGE_SIZE];
+    size_t size;
+} SerialRxQueueItem;
+
+// 시리얼 프로토콜 컨텍스트 구조체
+typedef struct {
+    // 통신 상태
+    uint8_t board_type;
+    uint16_t sequence_number;
+    bool peer_connected;
+    uint32_t last_hello_time;
+    uint32_t last_received_time;
+    uint32_t last_random_event;
+    bool initial_status_sent;
+    
+    // 수신 버퍼 관련
+    uint8_t rx_buffer[RX_BUFFER_SIZE];
+    size_t rx_buffer_index;
+    
+    // 수신 큐 관련
+    SerialRxQueueItem rx_queue[RX_QUEUE_SIZE];
+    int rx_queue_head;
+    int rx_queue_tail;
+    int rx_queue_count;
+    
+    // 뮤텍스 핸들 (FreeRTOS)
+    SemaphoreHandle_t rx_mutex;
+    SemaphoreHandle_t tx_mutex;
+
+    // 콜백 함수 포인터 (보드별 메시지 처리 함수)
+    void (*process_message_callback)(void* message, size_t size);
+} SerialProtocolContext;
+
 
 // LCD 보드용 함수 선언
 #ifdef BOARD_TYPE_LCD
@@ -178,9 +221,10 @@ typedef struct {
 // 시스템 상태 메시지
 typedef struct {
     MessageHeader header;
+	char model_name[32];
     char hw_version[8];
-    char sw_version[8];
-    char serial_num[16];
+    char sw_version[16];
+    char serial_num[32];
     uint8_t sys_status;
     uint8_t error_code;
     uint8_t reserved[2];
@@ -197,6 +241,9 @@ typedef struct {
     bool fulllevel_sensor;
     bool gas_sensor;
     bool power_status;
+	bool server_status;     // 서버 연결: true=연결됨, false=연결안됨 
+    bool motor_running;     // 모터 동작 여부: true=동작중, false=멈춤
+    bool wifi_connected;     // Wifi 연결 여부: true=연결됨, false=연결안됨
     uint8_t system_status;
     float weight_sensor;
     uint8_t battery_level;
@@ -337,6 +384,7 @@ typedef struct {
     MessageHeader header;
     uint8_t button_id;
     bool pressed;
+	uint8_t button_state;   // SW4의 소리 상태
     uint8_t reserved[2];
     uint8_t checksum;
 } ButtonEventMessage;
@@ -367,13 +415,16 @@ typedef struct {
     union {
         struct {
             uint8_t state;  // On/Off 상태
+            uint8_t reserved[7]; // 유니온 패딩
         } digital;
         struct {
             float value;    // 아날로그 값
+             uint8_t reserved[4]; // 유니온 패딩
         } analog;
         struct {
             uint8_t button_id;
             uint8_t state;
+			uint8_t reserved[6]; // 유니온 패딩
         } button;
         struct {
             uint8_t error_code;

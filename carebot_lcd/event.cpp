@@ -541,7 +541,8 @@ void cover_open_event_handler() {
             lv_obj_center(msg_label);
 
             // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-            lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, close_btn_img);
+           // lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, close_btn_img);
+			lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, close_btn_img);
             //lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
            
             Serial.println("+++ 3");  
@@ -557,7 +558,9 @@ void cover_open_event_handler() {
             label_hema = lv_label_create(btn_hema);
             lv_label_set_text(label_hema, "확인");  // 확인버튼 닫기 안됨 by yichoi 
             lv_obj_center(label_hema); 
-            lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+           // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+			
             lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거          
     
 }
@@ -613,8 +616,8 @@ void hematuria_client_event_handler() {
             lv_obj_center(msg_label);
 
             // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-            lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
-           
+          //  lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+            lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL); 
             Serial.println("+++ 3"); 
 
             // 7. 전송 버튼 등록
@@ -629,7 +632,10 @@ void hematuria_client_event_handler() {
             lv_label_set_text(label_hema, "확인");
             lv_obj_center(label_hema); 
             // ??amount = 0;
-            lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+           // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+			
+				
             lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거     
 
 
@@ -688,9 +694,10 @@ void waiting_event_handler(char* status) {
 
 
             // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-            //lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+            //lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL); */
+            lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
 
-            */
+            /* */
 
             Serial.println("+++ 2 in waiting_event_handler");
 
@@ -776,10 +783,10 @@ void waiting_event_handler_2(char* status) {
 
 
 
-            // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-            //lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+            // 6. 닫기 버튼 클릭 이벤트 핸들러 등록 */
+           // lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
 
-            */
+            lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
 
             Serial.println("+++ 2 waiting_event_handler_2");
 
@@ -860,7 +867,8 @@ void fulllevel_event_handler() {
             lv_obj_center(msg_label);
 
             // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-            lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+         //   lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+			lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
            
             Serial.println("+++ 3"); 
 
@@ -875,7 +883,8 @@ void fulllevel_event_handler() {
             label_hema = lv_label_create(btn_hema);
             lv_label_set_text(label_hema, "확인");
             lv_obj_center(label_hema); 
-            lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+            // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
             lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거     
 
 
