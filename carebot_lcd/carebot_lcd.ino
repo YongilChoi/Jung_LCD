@@ -67,8 +67,7 @@ void initializeSystem() {
 
 void setup() {
     // Start serial communication
-    Serial.begin(115200); //PC연결용 디버깅 포트 (USB)
-	Serial2.begin(115200, SERIAL_8N1, 44, 43); //to Main board 연결 케이블 시리얼 포트(4 Pin connector) 
+    Serial.begin(115200);
     delay(100);
     Serial.println("\n+++ HygeraApplication Starting +++");
     
