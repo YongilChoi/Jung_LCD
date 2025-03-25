@@ -448,17 +448,21 @@ void keyboard_event_cb(lv_event_t * e) {
     // 모드 전환 버튼 처리
     if(strcmp(txt, "ABC") == 0) {
         lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_UPPER);
+		lv_obj_invalidate(kb);  // UI 갱신
     } 
     else if(strcmp(txt, "abc") == 0) {
         lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_LOWER);
+		lv_obj_invalidate(kb);  // UI 갱신
     }
     else if(strcmp(txt, "#+=") == 0) {
         lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_SPECIAL);
         is_special_button = true;
+		lv_obj_invalidate(kb);  // UI 갱신
     }
     else if(strcmp(txt, "123") == 0) {
         lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_LOWER);
         is_special_button = true;
+		lv_obj_invalidate(kb);  // UI 갱신
     }
     Serial.println("+++ 2");
 
