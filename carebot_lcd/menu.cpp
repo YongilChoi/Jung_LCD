@@ -630,13 +630,13 @@ void initial_scr(void) {
 
     // 뒤로가기 헤더가 없으면 생성
     if (header_label_back == NULL) {
-        header_label_back = lv_label_create(main_screen);
+        header_label_back = lv_imgbtn_create(main_screen); 
         if (header_label_back != NULL) {
-            lv_label_set_text(header_label_back, "^");
-            lv_obj_add_style(header_label_back, &style_header_18, 0);
-            lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-            lv_obj_set_size(header_label_back, 50, 25);
-            lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            
+            lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+            lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+            lv_obj_set_size(header_label_back, 50, 50);
+            
             
             // 클릭 이벤트 설정
             lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -746,13 +746,13 @@ void wifi_ap_setup_cb(void) {
         }
 
         // 뒤로가기 헤더 생성
-        header_label_back = lv_label_create(wifi_ap_setup_screen);
+        header_label_back = lv_imgbtn_create(wifi_ap_setup_screen);
         if (header_label_back != NULL) {
-            lv_label_set_text(header_label_back, "^");
-            lv_obj_add_style(header_label_back, &style_header_18, 0);
-            lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-            lv_obj_set_size(header_label_back, 50, 25);
-            lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_size(header_label_back, 50, 50);
+            lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
+            lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+            
+            
             
             // 클릭 이벤트 설정
             lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -955,13 +955,11 @@ void wifi_network_selected(lv_event_t *e) {
     }
 
     // 뒤로가기 버튼 생성
-    header_label_back = lv_label_create(password_screen);
+    header_label_back = lv_imgbtn_create(password_screen);
     if (header_label_back != NULL) {
-        lv_label_set_text(header_label_back, "^");
-        lv_obj_add_style(header_label_back, &style_header_18, 0);
-        lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-        lv_obj_set_size(header_label_back, 50, 25);
-        lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_size(header_label_back, 50, 50);
+        lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+        lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
 
         // 클릭 이벤트 설정
         lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -1028,14 +1026,12 @@ bool create_wifi_selection_screen() {
         }
 
         // 뒤로가기 버튼 생성
-        header_label_back = lv_label_create(wifi_screen);
+        header_label_back = lv_imgbtn_create(wifi_screen);
         if (header_label_back != NULL) {
-            lv_label_set_text(header_label_back, "^");
-            lv_obj_add_style(header_label_back, &style_header_18, 0);
-            lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-            lv_obj_set_size(header_label_back, 50, 25);
-            lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-            
+            lv_obj_set_size(header_label_back, 50, 50);
+            lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+            lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
+
             // 클릭 이벤트 설정
             lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_add_event_cb(header_label_back, (lv_event_cb_t)&initial_cb_1, LV_EVENT_CLICKED, NULL);
@@ -1120,13 +1116,11 @@ void alarm_setup_cb(void) {
         }
      
         // 뒤로가기 헤더 생성
-        header_label_back = lv_label_create(alarm_setup_screen);
+        header_label_back = lv_imgbtn_create(alarm_setup_screen);
         if (header_label_back != NULL) {
-            lv_label_set_text(header_label_back, "^");
-            lv_obj_add_style(header_label_back, &style_header_18, 0);
-            lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-            lv_obj_set_size(header_label_back, 50, 25);
-            lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_size(header_label_back, 50, 50);
+            lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+            lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
             
             // 클릭 이벤트 설정
             lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -1171,13 +1165,11 @@ void relay_info_cb(void) {
     }
 
     // 뒤로가기 헤더 생성
-    header_label_back = lv_label_create(sub_screen);
+    header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_label_set_text(header_label_back, "^");
-        lv_obj_add_style(header_label_back, &style_header_18, 0);
-        lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-        lv_obj_set_size(header_label_back, 50, 25);
-        lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_size(header_label_back, 50, 50);
+        lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+        lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
         // 클릭 이벤트 설정
         lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -1218,13 +1210,11 @@ void urination_cb(void) {
     }
 
     // 뒤로가기 헤더 생성
-    header_label_back = lv_label_create(sub_screen);
+    header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_label_set_text(header_label_back, "^");
-        lv_obj_add_style(header_label_back, &style_header_18, 0);
-        lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-        lv_obj_set_size(header_label_back, 50, 25);
-        lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_size(header_label_back, 50, 50);
+        lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+        lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
         // 클릭 이벤트 설정
         lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -1265,13 +1255,11 @@ void terminal_info_cb(void) {
     }
 
     // 뒤로가기 헤더 생성
-    header_label_back = lv_label_create(sub_screen);
+    header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_label_set_text(header_label_back, "^");
-        lv_obj_add_style(header_label_back, &style_header_18, 0);
-        lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-        lv_obj_set_size(header_label_back, 50, 25);
-        lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_size(header_label_back, 50, 50);
+        lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+        lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
         // 클릭 이벤트 설정
         lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
@@ -1312,13 +1300,11 @@ void factory_menu_cb(void) {
     }
 
     // 뒤로가기 헤더 생성
-    header_label_back = lv_label_create(sub_screen);
+    header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_label_set_text(header_label_back, "^");
-        lv_obj_add_style(header_label_back, &style_header_18, 0);
-        lv_obj_align(header_label_back, LV_ALIGN_TOP_RIGHT, 0, 15);
-        lv_obj_set_size(header_label_back, 50, 25);
-        lv_obj_set_style_text_align(header_label_back, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_size(header_label_back, 50, 50);
+        lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
+        lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
         // 클릭 이벤트 설정
         lv_obj_add_flag(header_label_back, LV_OBJ_FLAG_CLICKABLE);
