@@ -23,7 +23,6 @@ TaskHandle_t displayTaskHandle = NULL;
 TaskHandle_t lvglTaskHandle = NULL;
 TaskHandle_t touchTaskHandle = NULL;
 TaskHandle_t serialTaskHandle = NULL;
-TaskHandle_t handleTaskHandle = NULL;
 
 void initializeSystem();
 
@@ -61,6 +60,7 @@ void initializeSystem() {
         backlightInitialized = true;
         logMessage("DISPLAY", LOG_LEVEL_INFO, "Backlight initialized");
     #endif
+    
     #endif
     logMessage("Setup", LOG_LEVEL_INFO, "System initialization completed");
 }
