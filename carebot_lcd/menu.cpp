@@ -692,7 +692,7 @@ lv_obj_set_style_anim_time(header_label_back, 0, LV_STATE_PRESSED);  // 애니�
 void show_menu_content(const char *title, const char *content) {
   
     lv_obj_t *popup = lv_obj_create(lv_scr_act());
-    lv_obj_set_size(popup, LV_PCT(80), LV_PCT(60));
+    lv_obj_set_size(popup, LV_PCT(80), LV_PCT(60));  //yichoi 
     lv_obj_center(popup);
     
     // 팝업 제목
@@ -1872,13 +1872,31 @@ void msg_close_handler_parent(lv_event_t * e) {
     lvgl_update_app_ui();
     //cover_OPEN = 0;
 }
- 
 void msg_close_handler_current(lv_event_t * e) {
-    lv_obj_t * msgbox = lv_event_get_current_target(e);
-    //lv_obj_t *alert = lv_obj_get_parent(msgbox);
-    Serial.println("+++ msgbox close before");
-    lv_msgbox_close(msgbox);
+	Serial.println("닫기 버튼 클릭 이벤트 발생!");
+	lv_obj_del_async(alert_msgbox);  // 메시지 박스 삭제
+
+//    lv_obj_t * close_btn = lv_event_get_current_target(e);
+//    lv_obj_t * alert_msgbox = lv_obj_get_parent(close_btn); // 부모 객체 찾기
+
+//    if (alert_msgbox) {
+//        Serial.println("+++ Closing alert_msgbox");
+//        lv_obj_del(alert_msgbox);  // 메시지 박스 삭제
+//    }
 }
+
+ 
+//void msg_close_handler_current(lv_event_t * e) {
+//    lv_obj_t * msgbox = lv_event_get_current_target(e);
+//    //lv_obj_t *alert = lv_obj_get_parent(msgbox);
+//    Serial.println("+++ msgbox close before");
+//   // lv_msgbox_close(msgbox);
+//	close_popup_cb(e);  //yichoi 
+//	        // 홈 화면으로 전환
+//   // transition_to_screen(panel0);
+			
+//	//lvgl_update_app_ui();
+//}
 
 void factory_event_handler(lv_event_t* e) {
     lv_event_code_t code = lv_event_get_code(e);

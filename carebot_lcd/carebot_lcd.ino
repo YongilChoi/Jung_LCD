@@ -40,7 +40,7 @@ void initializeSystem() {
     // Initialize touch
     Arduino_GFX* gfx = get_gfx_instance();
     if (gfx) {
-        touch_init(gfx->width(), gfx->height(), gfx->getRotation());
+        touch_init(gfx->width(), gfx->height(), gfx->getRotation()); // 터치 초기화 함수가 정상 작동하는지 확인       
     } else {
         logMessage("Setup", LOG_LEVEL_INFO, "Failed to get GFX instance, touch initialization skipped");
     }
@@ -65,7 +65,7 @@ void initializeSystem() {
 void setup() {
     // Start serial communication
     Serial.begin(115200); //PC연결용 디버깅 포트 (USB)
-	Serial2.begin(115200, SERIAL_8N1, 44, 43); //to Main board 연결 케이블 시리얼 포트(4 Pin connector) 
+	  Serial2.begin(115200, SERIAL_8N1, 44, 43); //to Main board 연결 케이블 시리얼 포트(4 Pin connector) 
     delay(100);
     Serial.println("\n+++ HygeraApplication Starting +++");
     
@@ -129,9 +129,9 @@ void setup() {
     xTaskCreatePinnedToCore(
         touch_task,       // Function to implement the task
         "TouchTask",      // Name of the task
-        2048,             // Stack size in words
+        4096,             // Stack size in words
         NULL,             // Task input parameter
-        2,                // Priority of the task
+        5,                // Priority of the task
         &touchTaskHandle, // Task handle
         1                 // Core where the task should run
     );
@@ -166,6 +166,10 @@ void setup() {
 	);
     
     logMessage("Setup", LOG_LEVEL_INFO, "All tasks created and started");
+	// 마지막에 Free Heap 출력
+  delay(500);  // ESP32의 시리얼 안정화를 위한 추가 대기
+	Serial.print("Free heap: ");
+	Serial.println(esp_get_free_heap_size());  // 남은 힙 메모리 출력
 }
 
 void loop() {

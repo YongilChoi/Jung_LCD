@@ -497,73 +497,137 @@ void Event_bat_LOW() {
 }
 
 
-void cover_open_event_handler() {
+
+//void cover_open_event_handler() {
    
-            // 1. 메시지 박스 상단 이미지 준비
-            Serial.println("+++ 1");
-            msg_top_img_check = lv_img_create(lv_scr_act());
-            lv_img_set_src(msg_top_img_check, &img_msgbox_check);
-            //lv_img_set_src(icn_01, &img_lvgl_icn_01);
+//            // 1. 메시지 박스 상단 이미지 준비
+//            Serial.println("+++ 1");
+//            msg_top_img_check = lv_img_create(lv_scr_act());
+//            lv_img_set_src(msg_top_img_check, &img_msgbox_check);
+//            //lv_img_set_src(icn_01, &img_lvgl_icn_01);
 
-            Serial.println("+++ 1");
+//            Serial.println("+++ 1");
 
-            // 2. 닫기 버튼 이미지 준비
-            close_btn_img = lv_img_create(lv_scr_act());
-            lv_img_set_src(close_btn_img, &img_close_btn);
-            lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
-            lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED);  // 애니메이션 제거
+//            // 2. 닫기 버튼 이미지 준비
+//            close_btn_img = lv_img_create(lv_scr_act());
+//            lv_img_set_src(close_btn_img, &img_close_btn);
+//			lv_obj_set_size(close_btn_img, 50, 30); // 적절한 크기 설정 (예: 30x30 픽셀)
+//            lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+//            lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED);  // 애니메이션 제거
         
 
-            // 3. 사용자 지정 메시지 박스 생성
-            alert_msgbox = lv_obj_create(lv_scr_act());
-            lv_obj_set_size(alert_msgbox, 300, 150);
-            lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
-            //lv_obj_set_pos(alert, (lv_disp_get_hor_res(NULL) - 300) / 2, (lv_disp_get_ver_res(NULL) - 150) / 2);
-            Serial.println("+++ 1");
+//            // 3. 사용자 지정 메시지 박스 생성
+//            alert_msgbox = lv_obj_create(lv_scr_act());
+//            lv_obj_set_size(alert_msgbox, 300, 150);
+//            lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
+//            //lv_obj_set_pos(alert, (lv_disp_get_hor_res(NULL) - 300) / 2, (lv_disp_get_ver_res(NULL) - 150) / 2);
+//            Serial.println("+++ 1");
 
-            // 4. msg_top_img를 alert 메시지 박스의 상단에 추가
-            lv_obj_set_parent(msg_top_img_check, alert_msgbox);         // msg_top_img를 alert의 자식으로 설정합니다.
-            lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5); // 메시지 박스 상단 중앙에 이미지 정렬, Y축으로 약간 내림
+//            // 4. msg_top_img를 alert 메시지 박스의 상단에 추가
+//            lv_obj_set_parent(msg_top_img_check, alert_msgbox);         // msg_top_img를 alert의 자식으로 설정합니다.
+//            lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5); // 메시지 박스 상단 중앙에 이미지 정렬, Y축으로 약간 내림
 
-            Serial.println("+++ 1");
+//            Serial.println("+++ 1");
 
-            // 5. 닫기 버튼을 alert 메시지 박스의 우측 상단에 추가 (예시)
-            lv_obj_set_parent(close_btn_img, alert_msgbox);       // close_btn_img를 alert의 자식으로 설정합니다.
-            Serial.println("+++ 2");
-            //lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 메시지 박스 우측 상단에 버튼 정렬
-            lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, 10, -10); // 메시지 박스 우측 상단에 버튼 정렬
+//            // 5. 닫기 버튼을 alert 메시지 박스의 우측 상단에 추가 (예시)
+//            lv_obj_set_parent(close_btn_img, alert_msgbox);       // close_btn_img를 alert의 자식으로 설정합니다.
+//            Serial.println("+++ 2");
+//            //lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 메시지 박스 우측 상단에 버튼 정렬
+//            lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, 10, -10); // 메시지 박스 우측 상단에 버튼 정렬
 
 
-            Serial.println("+++ 2");
+//            Serial.println("+++ 2");
 
-            msg_label = lv_label_create(alert_msgbox);
-            lv_label_set_text(msg_label, "박스 커버가 열렸습니다.");
-            lv_obj_center(msg_label);
+//            msg_label = lv_label_create(alert_msgbox);
+//            lv_label_set_text(msg_label, "박스 커버가 열렸습니다.");
+//            lv_obj_center(msg_label);
 
-            // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-           // lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, close_btn_img);
-			lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, close_btn_img);
-            //lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+//            // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
+//           // lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, close_btn_img);
+//			lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, close_btn_img);
+//            //lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
            
-            Serial.println("+++ 3");  
+//            Serial.println("+++ 3");  
 
-                        // 7. 전송 버튼 등록
+//                        // 7. 전송 버튼 등록
 
-            btn_hema = lv_btn_create(alert_msgbox);
+//            btn_hema = lv_btn_create(alert_msgbox);
 
-            lv_obj_set_size(btn_hema, 50, 25);
-            lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
+//            lv_obj_set_size(btn_hema, 50, 25);
+//            lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
 
-            // 버튼에 라벨 추가
-            label_hema = lv_label_create(btn_hema);
-            lv_label_set_text(label_hema, "확인");  // 확인버튼 닫기 안됨 by yichoi 
-            lv_obj_center(label_hema); 
-           // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
-			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+//            // 버튼에 라벨 추가
+//            label_hema = lv_label_create(btn_hema);
+//            lv_label_set_text(label_hema, "확인");  // 확인버튼 닫기 안됨 by yichoi 
+//            lv_obj_set_size(label_hema, 50, 30); // 적절한 크기 설정 (예: 30x30 픽셀)
+//            lv_obj_center(label_hema); 
+//           // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+//			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
 			
-            lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거          
+//            lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거          
     
+//}
+
+void cover_open_event_handler() {
+    Serial.println("+++ cover_open_event_handler 시작");
+
+    // 1. 메시지 박스 상단 이미지 준비
+    Serial.println("+++ 1");
+    msg_top_img_check = lv_img_create(lv_scr_act());
+    lv_img_set_src(msg_top_img_check, &img_msgbox_check);
+
+    // 2. 닫기 버튼 이미지 준비
+    Serial.println("+++ 2");
+    close_btn_img = lv_img_create(lv_scr_act());
+    lv_img_set_src(close_btn_img, &img_close_btn);
+    lv_obj_set_size(close_btn_img, 30, 30); // 크기 조정
+    lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);
+    lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED); 
+
+    // 3. 사용자 지정 메시지 박스 생성
+    Serial.println("+++ 3");
+    alert_msgbox = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(alert_msgbox, 300, 150);
+    lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
+
+    // 4. 메시지 박스 상단 이미지 추가
+    lv_obj_set_parent(msg_top_img_check, alert_msgbox);
+    lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5);
+
+    // 5. 닫기 버튼을 메시지 박스의 우측 상단에 추가
+    Serial.println("+++ 4");
+    lv_obj_set_parent(close_btn_img, alert_msgbox);
+    lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 위치 수정
+    lv_obj_move_foreground(close_btn_img);  // 버튼을 최상위로 이동
+
+    // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
+    lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+
+    // 7. 메시지 라벨 생성
+    Serial.println("+++ 5");
+    msg_label = lv_label_create(alert_msgbox);
+    lv_label_set_text(msg_label, "박스 커버가 열렸습니다.");
+    lv_obj_center(msg_label);
+
+    // 8. 확인 버튼 생성
+    Serial.println("+++ 6");
+    btn_hema = lv_btn_create(alert_msgbox);
+    lv_obj_set_size(btn_hema, 50, 25);
+    lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
+    lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+    lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);
+
+    // 9. 버튼에 라벨 추가
+    label_hema = lv_label_create(btn_hema);
+    lv_label_set_text(label_hema, "확인");
+    lv_obj_center(label_hema);
+
+    // 10. UI 강제 업데이트 (레이아웃 문제 방지)
+    lv_obj_update_layout(alert_msgbox);
+
+    Serial.println("+++ cover_open_event_handler 끝");
 }
+
 
 void hematuria_client_event_handler() {
 
@@ -823,73 +887,135 @@ void waiting_event_handler_2(char* status) {
 }
 #endif
 /* 만수위 */ 
-void fulllevel_event_handler() {
+// void fulllevel_event_handler() {
    
-            // 1. 메시지 박스 상단 이미지 준비
-            Serial.println("+++ 1");
-            msg_top_img_check = lv_img_create(lv_scr_act());
-            lv_img_set_src(msg_top_img_check, &img_msgbox_check);
-            //lv_img_set_src(icn_01, &img_lvgl_icn_01);
+//             // 1. 메시지 박스 상단 이미지 준비
+//             Serial.println("+++ 1");
+//             msg_top_img_check = lv_img_create(lv_scr_act());
+//             lv_img_set_src(msg_top_img_check, &img_msgbox_check);
+//             //lv_img_set_src(icn_01, &img_lvgl_icn_01);
 
-            Serial.println("+++ 1");
+//             Serial.println("+++ 1");
 
-            // 2. 닫기 버튼 이미지 준비
-            close_btn_img = lv_img_create(lv_scr_act());
-            lv_img_set_src(close_btn_img, &img_close_btn);
-            lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
-            lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED);  // 애니메이션 제거
+//             // 2. 닫기 버튼 이미지 준비 ( X )
+//             close_btn_img = lv_img_create(lv_scr_act());
+//             lv_img_set_src(close_btn_img, &img_close_btn);
+// 			      lv_obj_set_size(close_btn_img, 20, 20); // 적절한 크기 설정 (예: 30x30 픽셀)
+//             lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+//             lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED);  // 애니메이션 제거
         
 
-            // 3. 사용자 지정 메시지 박스 생성
-            alert_msgbox = lv_obj_create(lv_scr_act());
-            lv_obj_set_size(alert_msgbox, 300, 150);
-            lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
-            //lv_obj_set_pos(alert, (lv_disp_get_hor_res(NULL) - 300) / 2, (lv_disp_get_ver_res(NULL) - 150) / 2);
-            Serial.println("+++ 1");
+//             // 3. 사용자 지정 메시지 박스 생성
+//             alert_msgbox = lv_obj_create(lv_scr_act());
+//             lv_obj_set_size(alert_msgbox, 300, 150);
+//             lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
+//             //lv_obj_set_pos(alert, (lv_disp_get_hor_res(NULL) - 300) / 2, (lv_disp_get_ver_res(NULL) - 150) / 2);
+//             Serial.println("+++ 1");
 
-            // 4. msg_top_img를 alert 메시지 박스의 상단에 추가
-            lv_obj_set_parent(msg_top_img_check, alert_msgbox);         // msg_top_img를 alert의 자식으로 설정합니다.
-            lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5); // 메시지 박스 상단 중앙에 이미지 정렬, Y축으로 약간 내림
+//             // 4. msg_top_img를 alert 메시지 박스의 상단에 추가
+//             lv_obj_set_parent(msg_top_img_check, alert_msgbox);         // msg_top_img를 alert의 자식으로 설정합니다.
+//             lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5); // 메시지 박스 상단 중앙에 이미지 정렬, Y축으로 약간 내림
 
-            Serial.println("+++ 1");
+//             Serial.println("+++ 1");
 
-            // 5. 닫기 버튼을 alert 메시지 박스의 우측 상단에 추가 (예시)
-            lv_obj_set_parent(close_btn_img, alert_msgbox);       // close_btn_img를 alert_msgbox의 자식으로 설정합니다.
-            Serial.println("+++ 2");
-            //lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 메시지 박스 우측 상단에 버튼 정렬
-            lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, 10, -10); // 메시지 박스 우측 상단에 버튼 정렬
+//             // 5. 닫기 버튼을 alert 메시지 박스의 우측 상단에 추가 (예시)
+//             lv_obj_set_parent(close_btn_img, alert_msgbox);       // close_btn_img를 alert_msgbox의 자식으로 설정합니다.
+//             Serial.println("+++ 2");
+//             //lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 메시지 박스 우측 상단에 버튼 정렬
+//             lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, 10, -10); // 메시지 박스 우측 상단에 버튼 정렬
 
 
-            Serial.println("+++ 2");
+//             Serial.println("+++ 2");
 
-            msg_label = lv_label_create(alert_msgbox);
-            lv_label_set_text(msg_label, "배뇨통이 만수위가 되었습니다.");
-            lv_obj_center(msg_label);
+//             msg_label = lv_label_create(alert_msgbox);
+//             lv_label_set_text(msg_label, "배뇨통이 만수위가 되었습니다.");
+//             lv_obj_center(msg_label);
 
-            // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
-         //   lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
-			lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+//             // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
+//          //   lv_obj_add_event_cb(close_btn_img, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+// 			      lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
            
-            Serial.println("+++ 3"); 
+//             Serial.println("+++ 3"); 
 
-            // 7. 전송 버튼 등록
+//             btn_hema = lv_btn_create(alert_msgbox);
 
-            btn_hema = lv_btn_create(alert_msgbox);
+//             lv_obj_set_size(btn_hema, 50, 25);
+//             lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
 
-            lv_obj_set_size(btn_hema, 50, 25);
-            lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
+//             // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
+// 			      lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+//             lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거  
 
-            // 버튼에 라벨 추가
-            label_hema = lv_label_create(btn_hema);
-            lv_label_set_text(label_hema, "확인");
-            lv_obj_center(label_hema); 
-            // lv_obj_add_event_cb(btn_hema, msg_close_handler_parent, LV_EVENT_CLICKED, NULL);
-			lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
-            lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);  // 애니메이션 제거     
+//             // 버튼에 라벨 추가
+//             label_hema = lv_label_create(btn_hema);
+//             lv_label_set_text(label_hema, "확인");
+// 			      lv_obj_set_size(label_hema, 30, 30); // 적절한 크기 설정 (예: 30x30 픽셀)
+//             lv_obj_center(label_hema); 
 
-
-                Serial.printf("+++ fulllevel_event_handler\n");
+   
+//             Serial.printf("+++ fulllevel_event_handler\n");
     
+// }
+void fulllevel_event_handler() {
+    Serial.println("+++ fulllevel_event_handler 시작");
+
+    // 1. 메시지 박스 상단 이미지 준비
+    Serial.println("+++ 1");
+    msg_top_img_check = lv_img_create(lv_scr_act());
+    lv_img_set_src(msg_top_img_check, &img_msgbox_check);
+
+    // 2. 닫기 버튼 이미지 준비
+    Serial.println("+++ 2");
+    close_btn_img = lv_img_create(lv_scr_act()); // 우측 상단의 "X" 버튼 
+    lv_img_set_src(close_btn_img, &img_close_btn);
+    //lv_obj_set_size(close_btn_img, 30, 30);  // 버튼 크기 설정
+    lv_obj_add_flag(close_btn_img, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+    lv_obj_set_style_anim_time(close_btn_img, 0, LV_STATE_PRESSED);  // 애니메이션 제거
+
+    // 3. 사용자 지정 메시지 박스 생성
+    Serial.println("+++ 3");
+    alert_msgbox = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(alert_msgbox, 300, 150);
+    lv_obj_align(alert_msgbox, LV_ALIGN_CENTER, 0, 0);
+
+    // 4. 메시지 박스 상단 이미지 추가
+    lv_obj_set_parent(msg_top_img_check, alert_msgbox);
+    lv_obj_align(msg_top_img_check, LV_ALIGN_TOP_MID, 0, 5);
+
+    // 5. 닫기 버튼을 메시지 박스의 우측 상단에 추가
+    Serial.println("+++ 4");
+    lv_obj_set_parent(close_btn_img, alert_msgbox);
+    lv_obj_align(close_btn_img, LV_ALIGN_TOP_RIGHT, -10, 10); // 위치 수정
+    lv_obj_move_foreground(close_btn_img);  // 최상위로 이동
+
+    // 6. 닫기 버튼 클릭 이벤트 핸들러 등록
+    lv_obj_add_event_cb(close_btn_img, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+
+    // 7. 메시지 라벨 생성
+    Serial.println("+++ 5");
+    msg_label = lv_label_create(alert_msgbox);
+    lv_label_set_text(msg_label, "배뇨통이 만수위가 되었습니다.");
+    lv_obj_center(msg_label);
+
+    // 8. 확인 버튼 생성
+    Serial.println("+++ 6");
+    btn_hema = lv_btn_create(alert_msgbox);
+    lv_obj_set_size(btn_hema, 50, 25);
+    lv_obj_align(btn_hema, LV_ALIGN_BOTTOM_MID, 0, -5);
+    lv_obj_add_flag(btn_hema, LV_OBJ_FLAG_CLICKABLE);  // 클릭 가능하도록 설정
+    lv_obj_add_event_cb(btn_hema, msg_close_handler_current, LV_EVENT_CLICKED, NULL);
+    lv_obj_set_style_anim_time(btn_hema, 0, LV_STATE_PRESSED);
+
+    // 버튼에 라벨 추가
+    label_hema = lv_label_create(btn_hema);
+    lv_label_set_text(label_hema, "확인");
+    lv_obj_center(label_hema);
+
+    // 9. UI 강제 업데이트 (레이아웃 문제 방지)
+    lv_obj_update_layout(alert_msgbox);
+
+    Serial.println("+++ fulllevel_event_handler 끝");
 }
+
 
 

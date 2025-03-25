@@ -53,6 +53,7 @@ void initial_cb_1(lv_event_t * e);
 void initial_cb_2(lv_event_t * e);
 
 void msg_close_handler_parent(lv_event_t * e);
+void msg_close_handler_current(lv_event_t * e);
 
 void create_volume_control(lv_obj_t *parent);
 void create_relay_settings(lv_obj_t *parent);
