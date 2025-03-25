@@ -5,7 +5,6 @@
 #define LENGTH_TIMESTAMP  32
 #define MAX_WIFI_NETWORKS 10
 
-#define LV_COLOR_TRANSP lv_color_hex(0x000000)  // 검은색을 투명하게 설정
 typedef struct {
     char ssid[33];  // Max SSID length
     int32_t rssi;
@@ -14,9 +13,10 @@ typedef struct {
 
 extern WiFiNetwork available_networks[MAX_WIFI_NETWORKS];
 
-extern char* ssid_main;
-extern char* ip_addr_main;
-extern char* gateway_main;
+extern int network_count;
+extern bool need_to_restore_motor;
+extern bool wifi_screen_active;  // WiFi 화면 활성화 상태 추적
+
 
 // Forward declarations for screen callbacks
 void main_screen_create(void);
@@ -25,8 +25,9 @@ void menu_screen_create(void);
 void menu_screen_destroy(void);
 void settings_screen_create(void);
 void settings_screen_destroy(void);
+void safe_delete_wifi_timer();
 
-void create_wifi_selection_screen();
+bool create_wifi_selection_screen();
 
 // 메뉴 콜백 함수 선언
 void wifi_ap_setup_cb(void);
@@ -49,8 +50,8 @@ void create_new_screen(lv_timer_t *timer);
 void settings_screen_destroy(void);
 
 void initial_scr(void);
-void initial_cb_1(lv_event_t * e);
-void initial_cb_2(lv_event_t * e);
+void initial_cb_1(void);
+void initial_cb_2(void);
 
 void msg_close_handler_parent(lv_event_t * e);
 

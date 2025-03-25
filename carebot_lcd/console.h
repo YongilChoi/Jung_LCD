@@ -54,6 +54,9 @@ void handleAudioWater(const char* params);
 void handleAudioUrine(const char* params);
 void handleAudioStop(const char* params);
 void handleAudioStatus(const char* params);
+void handleUiStatus(const char* params);
+void handleUiMotorOn(const char* params);
+void handleUiMotorOff(const char* params);
 
 //void handleSetWiFi(const char* params);
 //void handleGetWiFi(const char* params);

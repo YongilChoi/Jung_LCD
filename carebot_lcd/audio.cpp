@@ -376,15 +376,15 @@ bool audio_init(AudioStorageType storage_type) {
 
     // 오디오 볼륨 설정
     uint8_t saved_volume = settings.volume_value;
-    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 settings.volume_value (%d)", settings.volume_value);
+    //logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 settings.volume_value (%d)", settings.volume_value);
     if (saved_volume < 1 || saved_volume > 10) saved_volume = 5;
-    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 (%d)", saved_volume);
+    //logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 (%d)", saved_volume);
     //current_volume = audio_volume;
     volume_value = saved_volume;
-    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 current_volume (%d)", current_volume);
-    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 volume_value (%d)", volume_value);
+    //logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 current_volume (%d)", current_volume);
+    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 (%d)", volume_value);
     audio_set_volume(saved_volume);
-    logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 current_volume (%d)", current_volume);
+    //logMessage("AUDIO", LOG_LEVEL_INFO, "오디오 볼륨 설정 current_volume (%d)", current_volume);
 
     // I2S 설정 초기화
     i2s_config_t i2s_config = {
@@ -715,9 +715,11 @@ void audio_playback_task(void* parameter) {
                     // 필요한 파일만 복사 시도
                     if (!audio_copy_files_to_spiffs()) {
                         // 복사 실패 시 SD 카드에서 직접 재생
+                        #if 1
                         logMessage("AUDIO", LOG_LEVEL_WARN, 
                                  "SPIFFS에 파일이 없고 복사 실패, SD 카드에서 직접 재생");
                         result = play_from_sd(filename, repeatMode, repeatCount);
+                        #endif
                         break;
                     }
                 }
@@ -1071,6 +1073,7 @@ void audio_stop(void) {
     // 재생 상태 초기화
     audioState.isPlaying = false;
     audioState.currentSound = NONE;
+
 }
 
 /**

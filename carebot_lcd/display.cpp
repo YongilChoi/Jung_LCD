@@ -1,6 +1,9 @@
+#include "lvgl_controller.h"
 #include "display.h"
 #include "common.h"
 #include "touch.h"
+#include "event.h"
+#include "menu.h"
 
 // Define display variables
 uint32_t screenWidth;
@@ -167,6 +170,15 @@ void lv_timer_task(void *pvParameters) {
         // Take mutex before handling LVGL tasks
         if (xSemaphoreTake(displayMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
             lv_timer_handler();
+
+            // 애니메이션 상태 업데이트
+            updateAnimations();
+
+            // UI 상태 업데이트
+            updateUI();
+
+            //log_ui_timer();
+
             xSemaphoreGive(displayMutex);
         }
         

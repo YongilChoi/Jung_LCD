@@ -1,3 +1,4 @@
+#if 0
 //#ifndef UART_SIMULATION_H
 //#define UART_SIMULATION_H
 //#ifdef USE_UART_SIMULATION
@@ -28,3 +29,4 @@ size_t receive_simulated_message(uint8_t* buffer, size_t max_length);
 
 //#endif // UART_SIMULATION_H
 //#endif // #ifdef USE_UART_SIMULATION
+#endif

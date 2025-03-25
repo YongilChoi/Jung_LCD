@@ -14,8 +14,9 @@
 #include "lvgl_controller.h"
 #include "audio.h"
 #include "console.h"
-#include "serial.h"
+#include "serial_lcd.h"
 #include "menu.h"
+#include "event.h"
 
 // Task handles
 TaskHandle_t displayTaskHandle = NULL;
@@ -44,6 +45,8 @@ void initializeSystem() {
     } else {
         logMessage("Setup", LOG_LEVEL_INFO, "Failed to get GFX instance, touch initialization skipped");
     }
+
+    current_ui_state.initialized = false;
     // Create main UI
     lvgl_create_app_ui();
     
@@ -94,17 +97,6 @@ void setup() {
         digitalWrite(GFX_BL, HIGH);
     #endif
 #endif
-
-	// 시리얼 통신을 위한 메시지 큐를 생성 
-	  serialQueue = xQueueCreate(QUEUE_SIZE, sizeof(uint8_t[512]));  
-	    if (serialQueue == NULL) {
-	        Serial.println("Failed to create queue!");
-	        return;
-	    }
-
-	// 메시지 큐 
-
-
     // Create tasks for different modules
     xTaskCreatePinnedToCore(
         display_task,     // Function to implement the task
@@ -136,6 +128,9 @@ void setup() {
         1                 // Core where the task should run
     );
     
+    // UI anumation용
+    setupAnimationTask();
+
     xTaskCreatePinnedToCore(
         TaskConsole,
         "Console",
@@ -144,7 +139,12 @@ void setup() {
          1,
          NULL,
          0);
-        // 시리얼  태스크 (Core  0  실행  )
+
+    //vTaskDelay(pdMS_TO_TICKS(1000));
+
+    #if 1
+    serial_lcd_init();
+    #else
     xTaskCreatePinnedToCore(
         serialTask,       // Function to implement the task
         "SerialTask",     // Name of the task
@@ -154,16 +154,9 @@ void setup() {
         &serialTaskHandle,// Task handle
         0                 // Core where the task should run
     );
-		// 핸들러 태스크 (Core 1  에서 실행)
-	xTaskCreatePinnedToCore(
-		handleTask,		 // Task 함수
-		"HandleTask", 	 // Task 이름
-		10000,			 // Stack 크기
-		NULL, 			 // Task 파라미터
-		2,				 // Task 우선순위
-		&handleTaskHandle, // Task 핸들
-		1 				 // Core 0에서 실행
-	);
+    #endif
+    vTaskDelay(pdMS_TO_TICKS(2000));
+    current_ui_state.initialized = true;
     
     logMessage("Setup", LOG_LEVEL_INFO, "All tasks created and started");
 }

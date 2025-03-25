@@ -5,11 +5,12 @@
 #include <time.h>
 //#include <WiFi.h>
 #include <ctype.h>
-#include "image_assets.h"
+
 static void setup_ui();
 static void rotate_callback(void *var, int32_t v);
 
-
+LV_IMG_DECLARE(img_power_off);
+LV_IMG_DECLARE(img_power_on);
 
 #define LV_USE_IMG_TRANSFORM 1
 #define LV_USE_LOG 1
