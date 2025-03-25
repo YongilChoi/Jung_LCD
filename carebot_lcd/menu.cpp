@@ -421,6 +421,81 @@ void setup_keyboard_with_special_chars(lv_obj_t *kb) {
 }
 
 // 수정된 키보드 이벤트 핸들러
+#if 1
+// 키보드 이벤트 핸들러 수정
+void keyboard_event_cb(lv_event_t * e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t * kb = lv_event_get_target(e);
+
+    Serial.println("+++ in keyboard_event_cb");
+
+    // 클릭 이벤트만 처리
+    if (code != LV_EVENT_CLICKED) return;
+
+    // 현재 입력된 패스워드 가져오기
+    entered_password = lv_textarea_get_text(password_ta_2);
+    Serial.printf("+++ 현재 패스워드: %s\n", entered_password);
+    
+    // 버튼 ID 가져오기
+    uint16_t btn_id = lv_btnmatrix_get_selected_btn(kb);
+    if(btn_id == LV_BTNMATRIX_BTN_NONE) return;
+    
+    const char * txt = lv_btnmatrix_get_btn_text(kb, btn_id);
+    if(txt == NULL) return;
+    
+    Serial.printf("+++ 클릭된 버튼 텍스트: %s, ID: %d\n", txt, btn_id);
+    
+    // 특수 버튼 처리를 위한 플래그
+    bool is_special_button = false;
+    
+    // 자체 모드 추적 변수 사용
+    static bool is_uppercase_mode = false;
+    
+    // 대소문자 변환 처리 - 대소문자 구분없이 비교
+    if(strcasecmp(txt, "ABC") == 0 || strcasecmp(txt, "abc") == 0) {
+        Serial.println("+++ 대소문자 전환 시도");
+        
+        // 현재 내부 추적 상태를 기반으로 모드 전환
+        is_uppercase_mode = !is_uppercase_mode;
+        
+        if(is_uppercase_mode) {
+            Serial.println("+++ 대문자 모드로 전환");
+            lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_UPPER);
+        } else {
+            Serial.println("+++ 소문자 모드로 전환");
+            lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_LOWER);
+        }
+        
+        // 키보드 갱신을 강제로 수행
+        lv_obj_invalidate(kb);
+        
+        is_special_button = true;
+    }
+    // 특수문자 전환
+    else if(strcmp(txt, "#+=") == 0) {
+        Serial.println("+++ 특수문자 모드로 전환");
+        lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_SPECIAL);
+        is_special_button = true;
+    }
+    // 숫자/알파벳 모드 전환
+    else if(strcmp(txt, "123") == 0) {
+        Serial.println("+++ 기본 모드로 전환");
+        lv_keyboard_set_mode(kb, LV_KEYBOARD_MODE_TEXT_LOWER);
+        is_uppercase_mode = false;
+        is_special_button = true;
+    }
+
+    // 특수 버튼인 경우 텍스트 입력 방지
+    if (is_special_button) {
+        Serial.println("+++ 특수 버튼 처리 - 텍스트 입력 방지");
+        lv_obj_t * ta = lv_keyboard_get_textarea(kb);
+        // 추가 처리가 필요한 경우 여기에 코드 추가
+    }
+    
+    Serial.printf("+++ is_special_button: %d, is_uppercase_mode: %d\n", 
+                is_special_button, is_uppercase_mode);
+}
+#else
 void keyboard_event_cb(lv_event_t * e) {
     lv_event_code_t code = lv_event_get_code(e);
     lv_obj_t * kb = lv_event_get_target(e);
@@ -479,6 +554,7 @@ void keyboard_event_cb(lv_event_t * e) {
     Serial.printf("+++ btn_id: %d \n", btn_id);
     Serial.printf("+++ is_special_button: %d \n", is_special_button);
 }
+#endif
 void factory_screen(lv_obj_t *parent) {
     // 스타일 생성
     static lv_style_t style_ta;
