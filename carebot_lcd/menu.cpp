@@ -640,7 +640,7 @@ void initial_scr(void) {
             
             lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
             lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
-            lv_obj_set_size(header_label_back, 50, 50);
+            lv_obj_set_size(header_label_back, 25, 25);
             
             
             // 클릭 이벤트 설정
@@ -753,7 +753,7 @@ void wifi_ap_setup_cb(void) {
         // 뒤로가기 헤더 생성
         header_label_back = lv_imgbtn_create(wifi_ap_setup_screen);
         if (header_label_back != NULL) {
-            lv_obj_set_size(header_label_back, 50, 50);
+            lv_obj_set_size(header_label_back, 25, 25);
             lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn	, NULL);
             lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
             
@@ -962,7 +962,7 @@ void wifi_network_selected(lv_event_t *e) {
     // 뒤로가기 버튼 생성
     header_label_back = lv_imgbtn_create(password_screen);
     if (header_label_back != NULL) {
-        lv_obj_set_size(header_label_back, 50, 50);
+        lv_obj_set_size(header_label_back, 25, 25);
         lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
         lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
 
@@ -1033,7 +1033,7 @@ bool create_wifi_selection_screen() {
         // 뒤로가기 버튼 생성
         header_label_back = lv_imgbtn_create(wifi_screen);
         if (header_label_back != NULL) {
-            lv_obj_set_size(header_label_back, 50, 50);
+            lv_obj_set_size(header_label_back, 25, 25);
             lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
             lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
 
@@ -1123,7 +1123,7 @@ void alarm_setup_cb(void) {
         // 뒤로가기 헤더 생성
         header_label_back = lv_imgbtn_create(alarm_setup_screen);
         if (header_label_back != NULL) {
-            lv_obj_set_size(header_label_back, 50, 50);
+            lv_obj_set_size(header_label_back, 25, 25);
             lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
             lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
             
@@ -1172,7 +1172,7 @@ void relay_info_cb(void) {
     // 뒤로가기 헤더 생성
     header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_obj_set_size(header_label_back, 50, 50);
+        lv_obj_set_size(header_label_back, 25, 25);
         lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
         lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
@@ -1217,7 +1217,7 @@ void urination_cb(void) {
     // 뒤로가기 헤더 생성
     header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_obj_set_size(header_label_back, 50, 50);
+        lv_obj_set_size(header_label_back, 25, 25);
         lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
         lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
@@ -1262,7 +1262,7 @@ void terminal_info_cb(void) {
     // 뒤로가기 헤더 생성
     header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_obj_set_size(header_label_back, 50, 50);
+        lv_obj_set_size(header_label_back, 25, 25);
         lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
         lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
@@ -1307,7 +1307,7 @@ void factory_menu_cb(void) {
     // 뒤로가기 헤더 생성
     header_label_back = lv_imgbtn_create(sub_screen);
     if (header_label_back != NULL) {
-        lv_obj_set_size(header_label_back, 50, 50);
+        lv_obj_set_size(header_label_back, 25, 25);
         lv_imgbtn_set_src(header_label_back, LV_IMGBTN_STATE_RELEASED, NULL, &img_backbtn, NULL);
         lv_obj_align(header_label_back, LV_ALIGN_TOP_LEFT, 0, 15);
         
