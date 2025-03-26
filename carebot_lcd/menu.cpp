@@ -122,7 +122,7 @@ lv_obj_t* gateway_label;
 
 // 전역 변수 선언
 #define PASSWORD_LENGTH 15  // 최대 암호 길이
-#define CORRECT_PASSWORD "Hygera2024!@#" // 올바른 암호 설정
+#define CORRECT_PASSWORD "Hygera2025@#" // 올바른 암호 설정
 //#define CORRECT_PASSWORD "AAAbbb!@#" // 올바른 암호 설정
 //static const char * CORRECT_PASSWORD = "AAAbbb1!@";
 #define MIN_PASSWORD_LENGTH 8  // 최소 암호 길이
