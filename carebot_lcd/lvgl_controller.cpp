@@ -5,6 +5,7 @@
 #include "nanum_gothic_16.h"
 #include "menu.h"
 #include "event.h"
+#include "image_assets.h"
 
 // UI objects
 lv_obj_t *main_screen = NULL;
@@ -48,29 +49,6 @@ volatile bool ui_update_requested = false;
 
 volatile UIState current_ui_state = {0};
 
-// External declarations for image resources
-LV_IMG_DECLARE(img_bg);
-LV_IMG_DECLARE(img_hygera);
-LV_IMG_DECLARE(img_motor_off);
-//LV_IMG_DECLARE(img_motor_on);
-LV_IMG_DECLARE(img_error_off);
-LV_IMG_DECLARE(img_error_on);
-LV_IMG_DECLARE(img_feces_off);
-LV_IMG_DECLARE(img_feces_on);
-LV_IMG_DECLARE(img_connect_off);
-LV_IMG_DECLARE(img_connect_on);
-LV_IMG_DECLARE(img_diaper_off);
-LV_IMG_DECLARE(img_diaper_on);
-LV_IMG_DECLARE(img_menu_off);
-LV_IMG_DECLARE(img_power_off);
-LV_IMG_DECLARE(img_power_on);
-LV_IMG_DECLARE(img_wifi_off);
-LV_IMG_DECLARE(img_wifi_on);
-LV_IMG_DECLARE(img_bat_off);
-LV_IMG_DECLARE(img_bat_on);
-
-// Font declarations
-LV_FONT_DECLARE(nanum_gothic_16);
 
 disp_size_t disp_size;
 
