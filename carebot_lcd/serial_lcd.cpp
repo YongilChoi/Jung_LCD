@@ -305,11 +305,13 @@ void lcd_process_message(void* message, size_t size) {
     }
     
     // 처음 전원 켜질 때 초기화
+    if 0
     if (power_ON == 0) {
         Event_power_ON();
         //Event_bat_LOW();
         power_ON = 1;
     }
+    endif 
     
     MessageHeader* header = (MessageHeader*)message;
 
