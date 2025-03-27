@@ -17,7 +17,7 @@
 #include "serial_lcd.h"
 #include "menu.h"
 #include "event.h"
-
+#define PASSWORD "wldud2025^&*"  // 원하는 패스워드 설정
 // Task handles
 TaskHandle_t displayTaskHandle = NULL;
 TaskHandle_t lvglTaskHandle = NULL;
