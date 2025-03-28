@@ -17,7 +17,7 @@
 #include "serial_lcd.h"
 #include "menu.h"
 #include "event.h"
-#define PASSWORD "wldud2025^&*"  // 원하는 패스워드 설정
+
 // Task handles
 TaskHandle_t displayTaskHandle = NULL;
 TaskHandle_t lvglTaskHandle = NULL;
@@ -69,36 +69,7 @@ void setup() {
     // Start serial communication
     Serial.begin(115200);
     delay(100);
-    //lock begin by yichoi
-    Serial.println("ESP32 Booting...");
-    String inputPassword = "";
-    Serial.print("Enter Password: ");
-
-    while (true) {
-        if (Serial.available()) {
-            char c = Serial.read();
-            if (c == '\n') break;  // 엔터 입력 시 종료
-            if (c == '\r') continue;  // 개행 문자 무시
-            if (c == 8 || c == 127) {  // 백스페이스 처리
-                if (inputPassword.length() > 0) {
-                    inputPassword.remove(inputPassword.length() - 1);
-                    Serial.print("\b \b");  // 커서를 뒤로 이동 후 공백 출력하여 삭제
-                }
-            } else {
-                inputPassword += c;
-                Serial.print("*");  // 입력된 문자 대신 '*' 출력
-            }
-        }
-    }
-    Serial.println();  // 개행
-    if (inputPassword == PASSWORD) {
-        Serial.println("Access Granted!");
-    } else {
-        Serial.println("Access Denied! Restarting...");
-        delay(2000);
-        ESP.restart();
-    }
-    //lock end 
+    
     Serial.println("\n+++ HygeraApplication Starting +++");
     
     // Disable watchdog timer
